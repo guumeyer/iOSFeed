@@ -8,28 +8,33 @@
 
 import XCTest
 
-class RemoteFeedLoader {
+/// The RemoteFeedLoader loads feed based on the API.
+public class RemoteFeedLoader {
     
-    let client: HTTPClient
+    private let client: HTTPClient
     
     init(client: HTTPClient) {
         self.client = client
     }
     
-    func load() {
+    public func load() {
         guard let url = URL(string: "http://a-url.com") else { return }
         client.get(from: url)
     }
 }
 
-class HTTPClient {
-    func get(from: URL) {  }
+/// The HTTP client protocol
+protocol HTTPClient {
+    /// Makes a HTTP Get requests
+    ///
+    /// - Parameter from: the `URL`.
+    func get(from: URL)
 }
 
 class HTTPClientSpy: HTTPClient {
     var requestURL: URL?
     
-    override func get(from: URL) {
+    func get(from: URL) {
         requestURL = from
     }
 }
