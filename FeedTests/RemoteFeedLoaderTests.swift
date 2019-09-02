@@ -9,20 +9,11 @@
 import XCTest
 import Feed
 
-class HTTPClientSpy: HTTPClient {
-    var requestURL: URL?
-    var requestURLs = [URL]()
-    func get(from: URL) {
-        requestURL = from
-        requestURLs.append(from)
-    }
-}
-
 class RemoteFeedLoaderTests: XCTestCase {
     func test_init_doesNotRequestDataFromURL() {
         let (_ , client) = makeSUT()
         
-        XCTAssertNil(client.requestURL)
+        XCTAssertTrue(client.requestURLs.isEmpty)
     }
     
     func test_load_requestsçDataFromURL() {
@@ -31,7 +22,7 @@ class RemoteFeedLoaderTests: XCTestCase {
         
         sut.load()
         
-        XCTAssertNotNil(client.requestURL)
+        XCTAssertEqual(client.requestURLs, [url])
     }
     
     func test_loadTwice_requestsçDataFromURLTwice() {
@@ -42,12 +33,20 @@ class RemoteFeedLoaderTests: XCTestCase {
         sut.load()
         
         XCTAssertEqual(client.requestURLs, [url, url])
-        XCTAssertEqual(client.requestURLs.count, 2)
-        XCTAssertNotNil(client.requestURL)
     }
+    
+    // MARK: - Helpers
     
     func makeSUT(url: URL = URL(string: "http://a-url.com")!) -> (sut: RemoteFeedLoader, client: HTTPClientSpy)  {
         let client = HTTPClientSpy()
         return (RemoteFeedLoader(url: url, client: client),  client)
     }
+    
+    class HTTPClientSpy: HTTPClient {
+        var requestURLs = [URL]()
+        func get(from: URL) {
+            requestURLs.append(from)
+        }
+    }
+
 }
