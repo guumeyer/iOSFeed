@@ -11,9 +11,10 @@ import Feed
 
 class HTTPClientSpy: HTTPClient {
     var requestURL: URL?
-    
+    var requestURLs = [URL]()
     func get(from: URL) {
         requestURL = from
+        requestURLs.append(from)
     }
 }
 
@@ -30,6 +31,18 @@ class RemoteFeedLoaderTests: XCTestCase {
         
         sut.load()
         
+        XCTAssertNotNil(client.requestURL)
+    }
+    
+    func test_loadTwice_requestsçDataFromURLTwice() {
+        let url = URL(string: "http://a-given-url.com")!
+        let (sut, client) = makeSUT(url: url)
+        
+        sut.load()
+        sut.load()
+        
+        XCTAssertEqual(client.requestURLs, [url, url])
+        XCTAssertEqual(client.requestURLs.count, 2)
         XCTAssertNotNil(client.requestURL)
     }
     
