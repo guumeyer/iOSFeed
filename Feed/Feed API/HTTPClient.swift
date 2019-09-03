@@ -13,5 +13,5 @@ public protocol HTTPClient {
     /// Makes a HTTP Get requests
     ///
     /// - Parameter from: the `URL`.
-    func get(from: URL, completion: (Error) -> Void)
+    func get(from: URL, completion: @escaping (Error) -> Void)
 }
