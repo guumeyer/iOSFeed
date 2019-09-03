@@ -8,10 +8,19 @@
 
 import Foundation
 
+/// Represents the HTTPClient result
+///
+/// - success: the success with `HTTPURLResponse`.
+/// - failure: the failure with `Error`.
+public enum HTTPClientResult {
+    case success(HTTPURLResponse)
+    case failure(Error)
+}
+
 /// The HTTP client protocol
 public protocol HTTPClient {
     /// Makes a HTTP Get requests
     ///
     /// - Parameter from: the `URL`.
-    func get(from url: URL, completion: @escaping (Error?, HTTPURLResponse?) -> Void) 
+    func get(from url: URL, completion: @escaping (HTTPClientResult) -> Void) 
 }
