@@ -18,7 +18,13 @@ public final class RemoteFeedLoader {
         self.client = client
     }
     
-    public func load() {
-        client.get(from: url)
+    public enum Error: Swift.Error {
+        case connectivity
+    }
+    
+    public func load( completion: (Error) -> Void = { _ in })  {
+        client.get(from: url) { error in
+            completion(.connectivity)
+        }
     }
 }
