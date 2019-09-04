@@ -9,9 +9,9 @@
 import Foundation
 
 /// The FeedItem represent a feed item model.
-public struct FeedItem {
+public struct FeedItem: Equatable {
     let id: UUID
-    let description: String? 
+    let description: String?
     let location: String?
     let imageURL: URL
 }
