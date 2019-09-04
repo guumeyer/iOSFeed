@@ -13,7 +13,7 @@ import Foundation
 /// - success: the success with `HTTPURLResponse`.
 /// - failure: the failure with `Error`.
 public enum HTTPClientResult {
-    case success(HTTPURLResponse)
+    case success(Data, HTTPURLResponse)
     case failure(Error)
 }
 

@@ -9,6 +9,9 @@
 import Foundation
 
 /// The FeedItem represent a feed item model.
-public protocol FeedItem {
-    
+public struct FeedItem {
+    let id: UUID
+    let description: String? 
+    let location: String?
+    let imageURL: URL
 }
